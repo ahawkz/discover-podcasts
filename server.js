@@ -28,6 +28,12 @@ app.get('/', (req, res) => {
   res.send('hello world')
 });
 
+app.get('/test', (req, res) => {
+  res.json({
+    message: 'hello world'
+  })
+});
+
 // === LISTENER === //
 app.listen(PORT, () => {
   console.log('listening on port ', PORT);
