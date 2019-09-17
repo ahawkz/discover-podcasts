@@ -3,10 +3,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const db = mongoose.connection;
+const cors = require('cors');
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cors());
 
 
 // === PORT === //
