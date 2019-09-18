@@ -4,12 +4,15 @@ const mongoose = require('mongoose');
 const app = express();
 const db = mongoose.connection;
 const cors = require('cors');
-const unirest = require('unirest');
+const podcastsController = require('./controllers/podcasts.js');
+const Podcasts = require('./models/podcasts.js');
+const manyPodcasts = require('./models/podcastData.js')
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
+app.use('/podcasts', podcastsController)
 
 
 // === PORT === //
@@ -26,16 +29,27 @@ db.on('error', (err) => console.log(err.message + ' is Mongod not running?'));
 db.on('connected', () => console.log('mongo connected: ', MONGODB_URI));
 db.on('disconnected', () => console.log('mongo disconnected'));
 
-// === ROUTES === //
-app.get('/', (req, res) => {
-  res.send('hello world')
+// === SEED DATA === //
+app.get('/podcasts/seed', async (req, res) => {
+  try {
+    const seedItems = await Podcasts.create(manyPodcasts)
+    res.redirect('/')
+  } catch (err) {
+    res.send(err.message)
+  }
 });
 
-app.get('/test', (req, res) => {
-  res.json({
-    message: 'hello world'
-  })
-});
+
+// === ROUTES === //
+// app.get('/', (req, res) => {
+//   res.send('hello world')
+// });
+
+// app.get('/test', (req, res) => {
+//   res.json({
+//     message: 'hello world'
+//   })
+// });
 
 // === LISTENER === //
 app.listen(PORT, () => {

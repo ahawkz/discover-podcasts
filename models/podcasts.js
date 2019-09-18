@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 
 const podcastSchema = new mongoose.Schema({
-  collectionName: String,
-  artistName: String,
-  collectionViewUrl: String,
-  artworkUrl100: String,
-  primaryGenreName: String
+  title: String,
+  artist: String,
+  url: String,
+  artwork: String
 })
 
 const Podcasts = mongoose.model('Podcast', podcastSchema);
