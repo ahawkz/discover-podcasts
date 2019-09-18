@@ -4,15 +4,15 @@ const mongoose = require('mongoose');
 const app = express();
 const db = mongoose.connection;
 const cors = require('cors');
-const podcastsController = require('./controllers/podcasts.js');
-const Podcasts = require('./models/podcasts.js');
-const manyPodcasts = require('./models/podcastData.js')
+const newsController = require('./controllers/news.js');
+const News = require('./models/news.js');
+const manyNews = require('./models/newsData.js')
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
-app.use('/podcasts', podcastsController)
+app.use('/news', newsController)
 
 
 // === PORT === //
@@ -30,9 +30,9 @@ db.on('connected', () => console.log('mongo connected: ', MONGODB_URI));
 db.on('disconnected', () => console.log('mongo disconnected'));
 
 // === SEED DATA === //
-app.get('/podcasts/seed', async (req, res) => {
+app.get('/news/seed', async (req, res) => {
   try {
-    const seedItems = await Podcasts.create(manyPodcasts)
+    const seedItems = await News.create(manyNews)
     res.redirect('/')
   } catch (err) {
     res.send(err.message)
