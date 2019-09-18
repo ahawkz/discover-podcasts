@@ -9,6 +9,12 @@ router.get('/', (req, res) => {
   });
 });
 
+router.get('/test', (req, res) => {
+  res.json({
+    message: 'hello world'
+  })
+});
+
 //create
 router.post('/', (req, res) => {
   Podcasts.create(req.body, (err, createdPodcast) => {
